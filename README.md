@@ -1,5 +1,5 @@
 # Grafo_TPA
-Repositório do trabalho de Grafos
+Repositório do trabalho de Garfos
 
 Trabalho: Grafos
 
