@@ -46,6 +46,7 @@ public class Grafo<T> {
 
     public void caminhoEmLargura() {
         // imprimir o caminho em altura
+        System.out.println("Tem nada aqui não");
     }
 }
 //  O
