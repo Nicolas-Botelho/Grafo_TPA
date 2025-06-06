@@ -2,21 +2,21 @@ package app;
 
 public class Relacao {
 
-    private Pessoa p1, p2;
+    private Pessoa origem, destino;
     private int peso;
 
-    public Relacao(Pessoa p1, Pessoa p2, int peso){
-        this.p1 = p1;
-        this.p2 = p2;
+    public Relacao(Pessoa origem, Pessoa destino, int peso){
+        this.origem = origem;
+        this.destino = destino;
         this.peso = peso;
     }
 
-    public Pessoa getP1() {
-        return p1;
+    public Pessoa getOrigem() {
+        return origem;
     }
 
-    public Pessoa getP2() {
-        return p2;
+    public Pessoa getDestino() {
+        return destino;
     }
 
     public int getPeso() {
@@ -25,6 +25,6 @@ public class Relacao {
 
     @Override
     public String toString() {
-        return "Relação: " + p1.getNome() + " " + p1.getSobrenome() + " -[" + peso + "]- " + p2.getNome() + " " + p2.getSobrenome() + ".";
+        return origem.getNome() + " → " + destino.getNome() + ": Peso = " + peso + ".";
     }
 }
