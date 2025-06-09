@@ -16,4 +16,9 @@ public class Aresta<T> {
     public Vertice<T> getDestino() {
         return destino;
     }
+
+    @Override
+    public String toString() {
+        return this.getDestino().toString() + " - " + this.getPeso();
+    }
 }

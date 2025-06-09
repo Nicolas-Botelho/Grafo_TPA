@@ -32,4 +32,13 @@ public class Vertice<T> {
 
         return null;
     }
+
+    public ArrayList<Aresta<T>> getArestaList() {
+        return arestaList;
+    }
+
+    @Override
+    public String toString() {
+        return this.getValor().toString();
+    }
 }

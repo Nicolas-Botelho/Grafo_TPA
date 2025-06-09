@@ -45,11 +45,34 @@ public class Grafo<T> {
     }
 
     public void caminhoEmLargura() {
-        // imprimir o caminho em altura
-        System.out.println("Tem nada aqui não");
+        System.out.println("  O\n" + " /|\\\n" + "  |\n" + " / \\");
+
+        ArrayList<Vertice<T>> verticesImpressos = new ArrayList<>();
+        ArrayList<Vertice<T>> verticesAImprimir = new ArrayList<>();
+
+        Vertice<T> verticeAlvo = this.getVerticeList().getFirst();
+
+        System.out.println(verticeAlvo.getValor());
+        verticesImpressos.add(verticeAlvo);
+        for (Aresta<T> ares : verticeAlvo.getArestaList()) verticesAImprimir.add(ares.getDestino());
+
+        for (Vertice<T> alvo : verticesAImprimir) {
+            System.out.println(alvo.getValor());
+            System.out.println("vertices impressos " + verticesImpressos.toString());
+            System.out.println("vertices a imprimir " + verticesAImprimir.toString());
+            verticesImpressos.add(alvo);
+
+            for (Aresta<T> ares : alvo.getArestaList()) {
+                if (!verticesImpressos.contains(ares.getDestino()) && !verticesAImprimir.contains(ares.getDestino())) verticesAImprimir.add(ares.getDestino());
+            }
+        }
     }
+
+    /*
+     * print vertice
+     * adicionar vertice em uma lista de printados
+     * listar vertices das suas arestas
+     * verificar lista
+     * print vertice
+     */
 }
-//  O
-// /|\
-//  |
-// / \
