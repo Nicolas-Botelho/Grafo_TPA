@@ -45,11 +45,52 @@ public class Grafo<T> {
     }
 
     public void caminhoEmLargura() {
-        // imprimir o caminho em altura
-        System.out.println("Tem nada aqui não");
+        System.out.println("  O\n" + " /|\\\n" + "  |\n" + " / \\");
+
+        ArrayList<Vertice<T>> verticesMarcados = new ArrayList<>();
+        ArrayList<Vertice<T>> verticesFila = new ArrayList<>();
+
+        verticesFila.add(this.getVerticeList().getFirst());
+
+        Vertice<T> verticeAlvo;
+
+        while (!verticesFila.isEmpty()) {
+            verticeAlvo = verticesFila.removeFirst();   //Remove vertice da fila
+            System.out.println(verticeAlvo.toString()); //Imprime o vertice
+            verticesMarcados.add(verticeAlvo);          //Adiciona o vertice como marcado (já foi impresso)
+
+            // Adiciona na fila os vertices ligados ao Alvo desde que não estejam marcados e nem na fila
+            for (Aresta<T> ares : verticeAlvo.getArestaList()) {
+                Vertice<T> verticeDest = ares.getDestino();
+                if (!verticesFila.contains(verticeDest) && !verticesMarcados.contains(verticeDest)) verticesFila.add(verticeDest);
+            }
+            System.out.println("vertices marcados " + verticesMarcados);
+            System.out.println("fila " + verticesFila);
+        }
+
+
+
+        // System.out.println(verticeAlvo.getValor());
+        // verticesMarcados.add(verticeAlvo);
+        // for (Aresta<T> ares : verticeAlvo.getArestaList()) verticesFila.add(ares.getDestino());
+
+        // for (Vertice<T> alvo : verticesFila) {
+        //     System.out.println(alvo.getValor());
+        //     System.out.println("vertices impressos " + verticesMarcados.toString());
+        //     System.out.println("vertices a imprimir " + verticesFila.toString());
+        //     verticesMarcados.add(alvo);
+
+        //     for (Aresta<T> ares : alvo.getArestaList()) {
+        //         if (!verticesMarcados.contains(ares.getDestino()) && !verticesFila.contains(ares.getDestino())) verticesFila.add(ares.getDestino());
+        //     }
+        // }
     }
+
+    /*
+     * print vertice
+     * adicionar vertice em uma lista de printados
+     * listar vertices das suas arestas
+     * verificar lista
+     * print vertice
+     */
 }
-//  O
-// /|\
-//  |
-// / \
