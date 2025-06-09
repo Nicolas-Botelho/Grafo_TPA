@@ -47,25 +47,43 @@ public class Grafo<T> {
     public void caminhoEmLargura() {
         System.out.println("  O\n" + " /|\\\n" + "  |\n" + " / \\");
 
-        ArrayList<Vertice<T>> verticesImpressos = new ArrayList<>();
-        ArrayList<Vertice<T>> verticesAImprimir = new ArrayList<>();
+        ArrayList<Vertice<T>> verticesMarcados = new ArrayList<>();
+        ArrayList<Vertice<T>> verticesFila = new ArrayList<>();
 
-        Vertice<T> verticeAlvo = this.getVerticeList().getFirst();
+        verticesFila.add(this.getVerticeList().getFirst());
 
-        System.out.println(verticeAlvo.getValor());
-        verticesImpressos.add(verticeAlvo);
-        for (Aresta<T> ares : verticeAlvo.getArestaList()) verticesAImprimir.add(ares.getDestino());
+        Vertice<T> verticeAlvo;
 
-        for (Vertice<T> alvo : verticesAImprimir) {
-            System.out.println(alvo.getValor());
-            System.out.println("vertices impressos " + verticesImpressos.toString());
-            System.out.println("vertices a imprimir " + verticesAImprimir.toString());
-            verticesImpressos.add(alvo);
+        while (!verticesFila.isEmpty()) {
+            verticeAlvo = verticesFila.removeFirst();   //Remove vertice da fila
+            System.out.println(verticeAlvo.toString()); //Imprime o vertice
+            verticesMarcados.add(verticeAlvo);          //Adiciona o vertice como marcado (já foi impresso)
 
-            for (Aresta<T> ares : alvo.getArestaList()) {
-                if (!verticesImpressos.contains(ares.getDestino()) && !verticesAImprimir.contains(ares.getDestino())) verticesAImprimir.add(ares.getDestino());
+            // Adiciona na fila os vertices ligados ao Alvo desde que não estejam marcados e nem na fila
+            for (Aresta<T> ares : verticeAlvo.getArestaList()) {
+                Vertice<T> verticeDest = ares.getDestino();
+                if (!verticesFila.contains(verticeDest) && !verticesMarcados.contains(verticeDest)) verticesFila.add(verticeDest);
             }
+            System.out.println("vertices marcados " + verticesMarcados);
+            System.out.println("fila " + verticesFila);
         }
+
+
+
+        // System.out.println(verticeAlvo.getValor());
+        // verticesMarcados.add(verticeAlvo);
+        // for (Aresta<T> ares : verticeAlvo.getArestaList()) verticesFila.add(ares.getDestino());
+
+        // for (Vertice<T> alvo : verticesFila) {
+        //     System.out.println(alvo.getValor());
+        //     System.out.println("vertices impressos " + verticesMarcados.toString());
+        //     System.out.println("vertices a imprimir " + verticesFila.toString());
+        //     verticesMarcados.add(alvo);
+
+        //     for (Aresta<T> ares : alvo.getArestaList()) {
+        //         if (!verticesMarcados.contains(ares.getDestino()) && !verticesFila.contains(ares.getDestino())) verticesFila.add(ares.getDestino());
+        //     }
+        // }
     }
 
     /*
