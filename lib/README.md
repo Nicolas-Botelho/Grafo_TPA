@@ -10,6 +10,8 @@ classDiagram
 
     class Grafo{
         List~Vertice~T~~ verticeList
+        boolean direcionado
+        boolean ponderado
     }
 
     class Aresta{
