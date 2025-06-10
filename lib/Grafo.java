@@ -4,9 +4,19 @@ import java.util.ArrayList;
 
 public class Grafo<T> {
     private ArrayList<Vertice<T>> verticeList;
+    private boolean direcionado;
+    private boolean ponderado;
 
     public Grafo() {
         this.verticeList = new ArrayList<>();
+        this.direcionado = true;
+        this.ponderado = true;
+    }
+
+    public Grafo(boolean dir, boolean pon) {
+        this.verticeList = new ArrayList<>();
+        this.direcionado = dir;
+        this.ponderado = pon;
     }
 
     public Vertice<T> adicionarVertice(T valor) {
@@ -28,7 +38,28 @@ public class Grafo<T> {
             return false;
         }
 
-        verticeOrigem.addAresta(verticeDestino, p);
+        if (this.ponderado) {
+            verticeOrigem.addAresta(verticeDestino, p);
+            if (!this.direcionado) verticeDestino.addAresta(verticeOrigem, p);
+        } else {
+            verticeOrigem.addAresta(verticeDestino, 1);
+            if (!this.direcionado) verticeDestino.addAresta(verticeOrigem, 1);
+        }
+        
+        return true;
+    }
+
+    public boolean adicionarAresta(T orig, T dest) {
+        Vertice<T> verticeOrigem = getVertice(orig);
+        Vertice<T> verticeDestino = getVertice(dest);
+        
+        if (verticeOrigem == null || verticeDestino == null) {
+            return false;
+        }
+
+        verticeOrigem.addAresta(verticeDestino, 1);
+        if (!this.direcionado) verticeDestino.addAresta(verticeOrigem, 1);
+        
         return true;
     }
 
@@ -45,7 +76,7 @@ public class Grafo<T> {
     }
 
     public void caminhoEmLargura() {
-        System.out.println("  O\n" + " /|\\\n" + "  |\n" + " / \\");
+        // System.out.println("  O\n" + " /|\\\n" + "  |\n" + " / \\");
 
         ArrayList<Vertice<T>> verticesMarcados = new ArrayList<>();
         ArrayList<Vertice<T>> verticesFila = new ArrayList<>();
@@ -64,33 +95,6 @@ public class Grafo<T> {
                 Vertice<T> verticeDest = ares.getDestino();
                 if (!verticesFila.contains(verticeDest) && !verticesMarcados.contains(verticeDest)) verticesFila.add(verticeDest);
             }
-            System.out.println("vertices marcados " + verticesMarcados);
-            System.out.println("fila " + verticesFila);
         }
-
-
-
-        // System.out.println(verticeAlvo.getValor());
-        // verticesMarcados.add(verticeAlvo);
-        // for (Aresta<T> ares : verticeAlvo.getArestaList()) verticesFila.add(ares.getDestino());
-
-        // for (Vertice<T> alvo : verticesFila) {
-        //     System.out.println(alvo.getValor());
-        //     System.out.println("vertices impressos " + verticesMarcados.toString());
-        //     System.out.println("vertices a imprimir " + verticesFila.toString());
-        //     verticesMarcados.add(alvo);
-
-        //     for (Aresta<T> ares : alvo.getArestaList()) {
-        //         if (!verticesMarcados.contains(ares.getDestino()) && !verticesFila.contains(ares.getDestino())) verticesFila.add(ares.getDestino());
-        //     }
-        // }
     }
-
-    /*
-     * print vertice
-     * adicionar vertice em uma lista de printados
-     * listar vertices das suas arestas
-     * verificar lista
-     * print vertice
-     */
 }

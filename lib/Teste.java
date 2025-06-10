@@ -2,7 +2,7 @@ package lib;
 
 public class Teste {
     public static void main(String[] args) {
-        Grafo<Integer> g = new Grafo<>();
+        Grafo<Integer> g = new Grafo<>(true, true);
 
         g.adicionarVertice(1);
         g.adicionarVertice(2);
