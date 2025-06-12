@@ -1,13 +1,14 @@
 package app;
 
+import java.util.Scanner;
+
+import algoritmos.AlgoritmoVerificacaoCiclo;
 import lib.Grafo;
 import lib.Vertice;
-import lib.Aresta;
-
-import java.util.Scanner;
 
 public class Entrada {
     private Grafo<Pessoa> grafo = new Grafo<>();
+    private AlgoritmoVerificacaoCiclo<Pessoa> algoritmoDFS = new AlgoritmoVerificacaoCiclo<>();
 
     public void inicializar() {
         GerarPessoasERelacoes.gerarArquivo(); // Cria o arquivo
@@ -20,23 +21,40 @@ public class Entrada {
 
         do {
             System.out.println("=== Rede Social ===");
+            System.out.println("0 - Sair");
             System.out.println("1 - Listar Pessoas");
             System.out.println("2 - Mostrar Relações de uma Pessoa");
-            System.out.println("3 - Sair");
+            System.out.println("3 - Verificar Ciclos");
             System.out.print("Escolha uma opção: ");
             opcao = s.nextInt();
             s.nextLine(); // consumir quebra de linha
 
             switch (opcao) {
+                case 0:
+                    System.out.println("Saindo do programa.");
+                    return; // Sair do programa
                 case 1:
                     listarPessoas();
                     break;
-//                case 2:
-//                    mostrarRelacoesDePessoa(s);
-//                    break;
-                case 3:
-                    System.out.println("Encerrando programa.");
-                    break;
+//              case 2:
+//                  mostrarRelacoesDePessoa(s);
+//                  break;
+                // case 3:
+                //     System.out.println("Verificando ciclos no grafo...");
+                //     var ciclos = algoritmoDFS.verificacaoCiclo(grafo);
+                //     if (ciclos.isEmpty()) {
+                //         System.out.println("Nenhum ciclo encontrado.");
+                //     } else {
+                //         System.out.println("Ciclos encontrados:");
+                //         for (var ciclo : ciclos) {
+                //             System.out.print("Ciclo: ");
+                //             for (Vertice<Pessoa> v : ciclo) {
+                //                 System.out.print(v.getValor().getNome() + " -> ");
+                //             }
+                //             System.out.println("Fim do Ciclo");
+                //         }
+                //     }
+                //     break;
                 default:
                     System.out.println("Opção inválida.");
             }

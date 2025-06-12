@@ -8,8 +8,8 @@ import java.util.*;
 
 public class GerarPessoasERelacoes {
 
-    private static final int NUM_PESSOAS = 10;
-    private static final int NUM_RELACOES = 15;
+    private static final int NUM_PESSOAS = 20;
+    private static final int NUM_RELACOES = 35;
     private static final String NOME_ARQUIVO = "social_graph.txt";
 
     static String[] primeiroNome = {
@@ -41,14 +41,8 @@ public class GerarPessoasERelacoes {
 
         for (int i = 0; i < NUM_PESSOAS; i++) {
             String nome = gerarNomeAleatorio(random);
-            long id = System.nanoTime();
+            long id = i;
             pessoas.add(new Pessoa(id, nome));
-
-            //Serve para evitar IDs duplicados: System.nanoTime() em laços muito rápidos.
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException ignored) {
-            }
         }
 
         while (relacoes.size() < NUM_RELACOES) {

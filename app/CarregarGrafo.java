@@ -1,10 +1,11 @@
 package app;
 
-import lib.Grafo;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+
+import lib.Grafo;
 
 public class CarregarGrafo {
 

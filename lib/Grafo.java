@@ -97,4 +97,17 @@ public class Grafo<T> {
             }
         }
     }
+
+    public ArrayList<T> getAdjacentes(T valor) {
+        Vertice<T> vertice = getVertice(valor);
+        ArrayList<T> adjacentes = new ArrayList<>();
+        
+        if (vertice != null) {
+            for (Aresta<T> aresta : vertice.getArestaList()) {
+                adjacentes.add(aresta.getDestino().getValor());
+            }
+        }
+        
+        return adjacentes;
+    }
 }
