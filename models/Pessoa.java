@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Pessoa {
 
-    private Long id;
+    private Integer id;
     private String nome;
 
     public Pessoa(){
@@ -12,7 +12,7 @@ public class Pessoa {
         this.nome = null;
     }
 
-    public Pessoa(Long id, String nome){
+    public Pessoa(Integer id, String nome){
         this.id = id;
         this.nome = nome;
     }
@@ -21,7 +21,7 @@ public class Pessoa {
         return nome;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 

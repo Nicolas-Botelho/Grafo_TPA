@@ -1,12 +1,12 @@
 package app;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import algoritmos.AlgoritmoVerificacaoCiclo;
 import lib.Grafo;
 import lib.Vertice;
 import models.Pessoa;
-import lib.Aresta;
 
 public class Entrada {
     private Grafo<Pessoa> grafo = new Grafo<>();
@@ -51,6 +51,15 @@ public class Entrada {
         } while (opcao != 0);
     }
 
+    private Pessoa buscarPessoaPorId(int id) {
+        for (Vertice<Pessoa> v : grafo.getVerticeList()) {
+            if (v.getValor().getId().equals(id)) {
+                return v.getValor();
+            }
+        }
+        return null;
+    }
+
     private void listarPessoas() {
         System.out.println("--- Pessoas cadastradas ---");
         for (Vertice<Pessoa> v : grafo.getVerticeList()) {
@@ -61,22 +70,27 @@ public class Entrada {
     }
 
    private void mostrarRelacoesDePessoa(Scanner s) {
-       System.out.print("Digite o ID da pessoa: ");
-       Long id = s.nextLong();
-       s.nextLine();
+        System.out.print("Digite o ID da pessoa: ");
+        Integer id = s.nextInt();
+        s.nextLine();
 
-       Pessoa pessoa = buscarPessoaPorId(id);
-       if (pessoa == null) {
-           System.out.println("Pessoa não encontrada.");
-           return;
-       }
+        Pessoa pessoa = buscarPessoaPorId(id);
+        if (pessoa == null) {
+            System.out.println("Pessoa não encontrada.");
+            return;
+        }
 
-       Vertice<Pessoa> vertice = grafo.getVertice(pessoa);
-       System.out.println("--- Relações de " + pessoa.getNome() + " ---");
-       for (Aresta<Pessoa> a : vertice.getArestaList()) {
-           System.out.println("-> " + a.getDestino().getValor().getNome() + " (peso: " + a.getPeso() + ")");
-       }
-       System.out.println("------------------------------------");
+        ArrayList<Pessoa> relacoes = grafo.getAdjacentes(pessoa);
+
+        if (relacoes.isEmpty()) {
+            System.out.println("Nenhuma relação encontrada para " + pessoa.getNome() + ".");
+        } else {
+            System.out.println("Relações de " + pessoa.getNome() + ":");
+            for (Pessoa relacao : relacoes) {
+            System.out.println("- " + relacao.getNome());
+            }
+        }
+
    }
 
     private void verificarCiclos() {
@@ -95,14 +109,5 @@ public class Entrada {
                 System.out.println("Fim do Ciclo");
             }
         }
-    }
-
-    private Pessoa buscarPessoaPorId(Long id) {
-        for (Vertice<Pessoa> v : grafo.getVerticeList()) {
-            if (v.getValor().getId().equals(id)) {
-                return v.getValor();
-            }
-        }
-        return null;
     }
 }

@@ -12,7 +12,7 @@ public class CarregarGrafo {
 
     public static Grafo<Pessoa> carregarPessoasArquivo(String nomeArquivo) {
         Grafo<Pessoa> grafo = new Grafo<>();
-        Map<Long, Pessoa> mapaPessoas = new HashMap<>();
+        Map<Integer, Pessoa> mapaPessoas = new HashMap<>();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(nomeArquivo), StandardCharsets.UTF_8))) {
             String linha;
@@ -22,7 +22,7 @@ public class CarregarGrafo {
 
                 if (partes[0].equals("P")) {
                     // Linha de Pessoa: P;id;nome
-                    Long id = Long.parseLong(partes[1]);
+                    Integer id = Integer.parseInt(partes[1]);
                     String nome = partes[2];
                     Pessoa pessoa = new Pessoa(id, nome);
                     grafo.adicionarVertice(pessoa);
@@ -30,8 +30,8 @@ public class CarregarGrafo {
 
                 } else if (partes[0].equals("R")) {
                     // Linha de Relação: R;idOrigem;idDestino;peso
-                    Long idOrigem = Long.parseLong(partes[1]);
-                    Long idDestino = Long.parseLong(partes[2]);
+                    Integer idOrigem = Integer.parseInt(partes[1]);
+                    Integer idDestino = Integer.parseInt(partes[2]);
                     int peso = Integer.parseInt(partes[3]);
 
                     Pessoa origem = mapaPessoas.get(idOrigem);

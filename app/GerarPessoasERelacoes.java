@@ -50,7 +50,7 @@ public class GerarPessoasERelacoes {
 
         for (int i = 0; i < NUM_PESSOAS; i++) {
             String nome = gerarNomeAleatorio(random);
-            long id = i;
+            Integer id = i;
             pessoas.add(new Pessoa(id, nome));
         }
 
