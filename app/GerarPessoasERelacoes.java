@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+import models.Pessoa;
+import models.Relacao;
+
 public class GerarPessoasERelacoes {
 
     private static final int NUM_PESSOAS = 20;
@@ -13,13 +16,19 @@ public class GerarPessoasERelacoes {
     private static final String NOME_ARQUIVO = "social_graph.txt";
 
     static String[] primeiroNome = {
-            "Lucas", "Ana", "Pedro", "Mariana", "João", "Camila", "Felipe", "Laura", "Rafael", "Juliana",
-            "Mateus", "Bianca", "Gustavo", "Fernanda", "Bruno", "Amanda", "Daniel", "Isabela", "Thiago", "Letícia"
+        "Lucas", "Ana", "Pedro", "Mariana", "João", "Camila", "Felipe", "Laura", "Rafael", "Juliana",
+        "Mateus", "Bianca", "Gustavo", "Fernanda", "Bruno", "Amanda", "Daniel", "Isabela", "Thiago", "Letícia",
+        "Gabriel", "Carolina", "Vinícius", "Patrícia", "André", "Larissa", "Rodrigo", "Beatriz", "Eduardo", "Natália",
+        "Leonardo", "Priscila", "Marcelo", "Tatiane", "Alexandre", "Vanessa", "Ricardo", "Aline", "Diego", "Renata",
+        "Murilo", "Sabrina", "Caio", "Paula", "Vitor", "Helena", "Samuel", "Bruna", "Otávio", "Cecília"
     };
 
     static String[] segundoNome = {
-            "Silva", "Souza", "Costa", "Oliveira", "Pereira", "Lima", "Gomes", "Ribeiro", "Alves", "Carvalho",
-            "Rocha", "Fernandes", "Barros", "Moura", "Campos", "Cardoso", "Teixeira", "Martins", "Freitas", "Duarte"
+        "Silva", "Souza", "Costa", "Oliveira", "Pereira", "Lima", "Gomes", "Ribeiro", "Alves", "Carvalho",
+        "Rocha", "Fernandes", "Barros", "Moura", "Campos", "Cardoso", "Teixeira", "Martins", "Freitas", "Duarte",
+        "Monteiro", "Batista", "Dias", "Moreira", "Nunes", "Mendes", "Araujo", "Cavalcante", "Pinto", "Farias",
+        "Ferreira", "Machado", "Melo", "Ramos", "Vieira", "Castro", "Almeida", "Pires", "Santos", "Borges",
+        "Rezende", "Peixoto", "Assis", "Tavares", "Barbosa", "Correia", "Miranda", "Sales", "Antunes", "Aguiar"
     };
 
     private static String getAleatorio(String[] array, Random random) {
@@ -30,7 +39,7 @@ public class GerarPessoasERelacoes {
         String s1 = getAleatorio(primeiroNome, random);
         String s2 = getAleatorio(segundoNome, random);
 
-        return s1 + s2;
+        return s1 + ' ' + s2;
     }
 
     private static void gerarArquivoDePessoasERelacoes() {

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lib.Grafo;
+import models.Pessoa;
 
 public class CarregarGrafo {
 
