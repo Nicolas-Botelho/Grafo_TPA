@@ -22,19 +22,26 @@ public class Entrada {
         int opcao;
 
         do {
-            System.out.println("=== Rede Social ===");
-            System.out.println("0 - Sair");
-            System.out.println("1 - Listar Pessoas");
-            System.out.println("2 - Mostrar Relações de uma Pessoa");
-            System.out.println("3 - Verificar Ciclos");
+            System.out.println("\n===================================");
+            System.out.println("         FAKE REDE SOCIAL          ");
+            System.out.println("===================================");
+            System.out.println(" 0 - Sair");
+            System.out.println(" 1 - Listar Pessoas");
+            System.out.println(" 2 - Mostrar Relações de uma Pessoa");
+            System.out.println(" 3 - Verificar Ciclos");
+            System.out.println("===================================");
             System.out.print("Escolha uma opção: ");
+            while (!s.hasNextInt()) {
+                System.out.print("Por favor, digite um número: ");
+                s.next();
+            }
             opcao = s.nextInt();
             s.nextLine(); // consumir quebra de linha
 
             switch (opcao) {
                 case 0:
-                    System.out.println("Saindo do programa.");
-                    break; // Sair do programa
+                    System.out.println("\nSaindo do programa. Até logo!");
+                    break;
                 case 1:
                     listarPessoas();
                     break;
@@ -45,11 +52,12 @@ public class Entrada {
                     verificarCiclos();
                     break;
                 default:
-                    System.out.println("Opção inválida.");
+                    System.out.println("Opção inválida. Tente novamente.");
             }
 
         } while (opcao != 0);
     }
+
 
     private Pessoa buscarPessoaPorId(int id) {
         for (Vertice<Pessoa> v : grafo.getVerticeList()) {
@@ -61,16 +69,20 @@ public class Entrada {
     }
 
     private void listarPessoas() {
-        System.out.println("--- Pessoas cadastradas ---");
+        System.out.println("\n--- Pessoas cadastradas ---");
         for (Vertice<Pessoa> v : grafo.getVerticeList()) {
             Pessoa p = v.getValor();
-            System.out.println("ID: " + p.getId() + ", Nome: " + p.getNome());
+            System.out.printf("ID: %-3s | Nome: %s\n", p.getId(), p.getNome());
         }
-        System.out.println("---------------------------");
+        System.out.println("-------------------------------");
     }
 
-   private void mostrarRelacoesDePessoa(Scanner s) {
+    private void mostrarRelacoesDePessoa(Scanner s) {
         System.out.print("Digite o ID da pessoa: ");
+        while (!s.hasNextInt()) {
+            System.out.print("Por favor, digite um número: ");
+            s.next();
+        }
         Integer id = s.nextInt();
         s.nextLine();
 
@@ -87,11 +99,10 @@ public class Entrada {
         } else {
             System.out.println("Relações de " + pessoa.getNome() + ":");
             for (Pessoa relacao : relacoes) {
-            System.out.println("- " + relacao.getNome());
+                System.out.println("  -> " + relacao.getNome());
             }
         }
-
-   }
+    }
 
     private void verificarCiclos() {
         System.out.println("Verificando ciclos no grafo...");
@@ -101,12 +112,14 @@ public class Entrada {
             System.out.println("Nenhum ciclo encontrado.");
         } else {
             System.out.println("Ciclos encontrados:");
+            int count = 1;
             for (var ciclo : ciclos) {
-                System.out.print("Ciclo: ");
-                for (Vertice<Pessoa> v : ciclo) {
-                    System.out.print(v.getValor().getNome() + " -> ");
+                System.out.print("Ciclo " + count++ + ": ");
+                for (int i = 0; i < ciclo.size(); i++) {
+                    System.out.print(ciclo.get(i).getValor().getNome());
+                    if (i < ciclo.size() - 1) System.out.print(" -> ");
                 }
-                System.out.println("Fim do Ciclo");
+                System.out.println();
             }
         }
     }
