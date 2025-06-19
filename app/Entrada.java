@@ -30,6 +30,7 @@ public class Entrada {
             System.out.println(" 2 - Ranquear Relações de uma Pessoa");
             System.out.println(" 3 - Detectar Comunidades de Amigos");
             System.out.println(" 4 - Melhor Rota Social Para Aproximação Entre Usuários");
+            System.out.println(" 5 - Sugerir Novos Amigos");
             System.out.println("===================================");
             System.out.print("Escolha uma opção: ");
             while (!s.hasNextInt()) {
@@ -54,6 +55,9 @@ public class Entrada {
                     break;
                 case 4:
                     executarDijkstra(s);
+                    break;
+                case 5:
+                    sugerirNovosAmigos(s);
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
@@ -208,6 +212,55 @@ public class Entrada {
                 if (j < caminho.size() - 1) System.out.print(" -> ");
             }
             System.out.println();
+        }
+    }
+
+    private void sugerirNovosAmigos(Scanner s) {
+        System.out.print("Digite o ID da pessoa para sugerir novos amigos: ");
+        while (!s.hasNextInt()) {
+            System.out.print("Por favor, digite um número: ");
+            s.next();
+        }
+        int idOrigem = s.nextInt();
+        s.nextLine();
+
+        Pessoa origem = buscarPessoaPorId(idOrigem);
+        if (origem == null) {
+            System.out.println("Pessoa não encontrada.");
+            return;
+        }
+
+        Vertice<Pessoa> verticeOrigem = grafo.getVertice(origem);
+        if (verticeOrigem == null) {
+            System.out.println("Erro interno: vértice da pessoa não encontrado.");
+            return;
+        }
+
+        AlgoritmoDijkstra<Pessoa> dijkstra = new AlgoritmoDijkstra<>();
+        dijkstra.executar(grafo, verticeOrigem);
+
+        ArrayList<Pessoa> amigosDiretos = grafo.getAdjacentes(origem);
+
+        System.out.println("\nSugestões de novos amigos para " + origem.getNome() + ":");
+
+        boolean encontrouSugestao = false;
+        ArrayList<Vertice<Pessoa>> vertices = grafo.getVerticeList();
+        for (int i = 0; i < vertices.size(); i++) {
+            Pessoa destino = vertices.get(i).getValor();
+
+            if (destino.equals(origem) || amigosDiretos.contains(destino)) {
+                continue;
+            }
+
+            double distancia = dijkstra.getDistancia(i);
+            if (distancia != Double.POSITIVE_INFINITY) {
+                System.out.printf("  -> %s (Distância social: %.2f)\n", destino.getNome(), distancia);
+                encontrouSugestao = true;
+            }
+        }
+
+        if (!encontrouSugestao) {
+            System.out.println("Nenhuma sugestão encontrada.");
         }
     }
 
