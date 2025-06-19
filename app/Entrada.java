@@ -23,13 +23,13 @@ public class Entrada {
 
         do {
             System.out.println("\n===================================");
-            System.out.println("         FAKE REDE SOCIAL          ");
+            System.out.println("         MAPEADOR DE RELAÇÕES SOCIAIS          ");
             System.out.println("===================================");
             System.out.println(" 0 - Sair");
-            System.out.println(" 1 - Listar Pessoas");
-            System.out.println(" 2 - Mostrar Relações de uma Pessoa");
-            System.out.println(" 3 - Verificar Ciclos");
-            System.out.println(" 4 - Calcular Caminhos Mínimos (Dijkstra)");
+            System.out.println(" 1 - Listar Pessoas Cadastradas");
+            System.out.println(" 2 - Ranquear Relações de uma Pessoa");
+            System.out.println(" 3 - Detectar Comunidades de Amigos");
+            System.out.println(" 4 - Melhor Rota Social Para Aproximação Entre Usuários");
             System.out.println("===================================");
             System.out.print("Escolha uma opção: ");
             while (!s.hasNextInt()) {
@@ -96,17 +96,28 @@ public class Entrada {
             return;
         }
 
-        ArrayList<Pessoa> relacoes = grafo.getAdjacentes(pessoa);
+        Vertice<Pessoa> vertice = grafo.getVertice(pessoa);
+        if (vertice == null) {
+            System.out.println("Erro interno: vértice da pessoa não encontrado.");
+            return;
+        }
 
-        if (relacoes.isEmpty()) {
+        ArrayList<lib.Aresta<Pessoa>> arestas = vertice.getArestaList();
+
+        if (arestas.isEmpty()) {
             System.out.println("Nenhuma relação encontrada para " + pessoa.getNome() + ".");
         } else {
-            System.out.println("Relações de " + pessoa.getNome() + ":");
-            for (Pessoa relacao : relacoes) {
-                System.out.println("  -> " + relacao.getNome());
+            arestas.sort((a1, a2) -> Double.compare(a1.getPeso(), a2.getPeso()));
+
+            System.out.println("Relações de " + pessoa.getNome() + " (ordenadas da mais forte para a mais fraca):");
+            for (lib.Aresta<Pessoa> aresta : arestas) {
+                Pessoa amigo = aresta.getDestino().getValor();
+                double peso = aresta.getPeso();
+                System.out.printf("  -> %s (Peso da relação: %.2f)\n", amigo.getNome(), peso);
             }
         }
     }
+
 
     private void verificarCiclos() {
         System.out.println("Verificando ciclos no grafo...");
