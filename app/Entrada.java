@@ -204,7 +204,7 @@ public class Entrada {
         if (distancia == Double.POSITIVE_INFINITY) {
             System.out.println("Não há caminho entre " + origem.getNome() + " e " + destino.getNome() + ".");
         } else {
-            System.out.printf("\nDistância mínima entre %s e %s: %.2f\n", origem.getNome(), destino.getNome(), distancia);
+            System.out.printf("\nDistância mínima entre %s e %s: %.2f (Distância mínima média: %.2f)\n", origem.getNome(), destino.getNome(), distancia, distancia/caminho.size());
             System.out.print("Caminho: ");
             for (int j = 0; j < caminho.size(); j++) {
                 Pessoa p = vertices.get(caminho.get(j)).getValor();
