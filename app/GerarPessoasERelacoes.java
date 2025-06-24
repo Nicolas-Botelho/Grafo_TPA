@@ -12,7 +12,7 @@ import models.Relacao;
 public class GerarPessoasERelacoes {
 
     private static final int NUM_PESSOAS = 20;
-    private static final int NUM_RELACOES = 35;
+    private static final int NUM_RELACOES = 40;
     private static final String NOME_ARQUIVO = "social_graph.txt";
 
     static String[] primeiroNome = {

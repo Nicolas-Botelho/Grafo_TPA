@@ -23,13 +23,14 @@ public class Entrada {
 
         do {
             System.out.println("\n===================================");
-            System.out.println("         FAKE REDE SOCIAL          ");
+            System.out.println("         MAPEADOR DE RELAÇÕES SOCIAIS          ");
             System.out.println("===================================");
             System.out.println(" 0 - Sair");
-            System.out.println(" 1 - Listar Pessoas");
-            System.out.println(" 2 - Mostrar Relações de uma Pessoa");
-            System.out.println(" 3 - Verificar Ciclos");
-            System.out.println(" 4 - Calcular Caminhos Mínimos (Dijkstra)");
+            System.out.println(" 1 - Listar Pessoas Cadastradas");
+            System.out.println(" 2 - Ranquear Relações de uma Pessoa");
+            System.out.println(" 3 - Detectar Comunidades de Amigos");
+            System.out.println(" 4 - Melhor Rota Social Para Aproximação Entre Usuários");
+            System.out.println(" 5 - Sugerir Novos Amigos");
             System.out.println("===================================");
             System.out.print("Escolha uma opção: ");
             while (!s.hasNextInt()) {
@@ -54,6 +55,9 @@ public class Entrada {
                     break;
                 case 4:
                     executarDijkstra(s);
+                    break;
+                case 5:
+                    sugerirNovosAmigos(s);
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
@@ -96,17 +100,28 @@ public class Entrada {
             return;
         }
 
-        ArrayList<Pessoa> relacoes = grafo.getAdjacentes(pessoa);
+        Vertice<Pessoa> vertice = grafo.getVertice(pessoa);
+        if (vertice == null) {
+            System.out.println("Erro interno: vértice da pessoa não encontrado.");
+            return;
+        }
 
-        if (relacoes.isEmpty()) {
+        ArrayList<lib.Aresta<Pessoa>> arestas = vertice.getArestaList();
+
+        if (arestas.isEmpty()) {
             System.out.println("Nenhuma relação encontrada para " + pessoa.getNome() + ".");
         } else {
-            System.out.println("Relações de " + pessoa.getNome() + ":");
-            for (Pessoa relacao : relacoes) {
-                System.out.println("  -> " + relacao.getNome());
+            arestas.sort((a1, a2) -> Double.compare(a1.getPeso(), a2.getPeso()));
+
+            System.out.println("Relações de " + pessoa.getNome() + " (ordenadas da mais forte para a mais fraca):");
+            for (lib.Aresta<Pessoa> aresta : arestas) {
+                Pessoa amigo = aresta.getDestino().getValor();
+                double peso = aresta.getPeso();
+                System.out.printf("  -> %s (Peso da relação: %.2f)\n", amigo.getNome(), peso);
             }
         }
     }
+
 
     private void verificarCiclos() {
         System.out.println("Verificando ciclos no grafo...");
@@ -189,7 +204,7 @@ public class Entrada {
         if (distancia == Double.POSITIVE_INFINITY) {
             System.out.println("Não há caminho entre " + origem.getNome() + " e " + destino.getNome() + ".");
         } else {
-            System.out.printf("\nDistância mínima entre %s e %s: %.2f\n", origem.getNome(), destino.getNome(), distancia);
+            System.out.printf("\nDistância mínima entre %s e %s: %.2f (Distância mínima média: %.2f)\n", origem.getNome(), destino.getNome(), distancia, distancia/caminho.size());
             System.out.print("Caminho: ");
             for (int j = 0; j < caminho.size(); j++) {
                 Pessoa p = vertices.get(caminho.get(j)).getValor();
@@ -197,6 +212,55 @@ public class Entrada {
                 if (j < caminho.size() - 1) System.out.print(" -> ");
             }
             System.out.println();
+        }
+    }
+
+    private void sugerirNovosAmigos(Scanner s) {
+        System.out.print("Digite o ID da pessoa para sugerir novos amigos: ");
+        while (!s.hasNextInt()) {
+            System.out.print("Por favor, digite um número: ");
+            s.next();
+        }
+        int idOrigem = s.nextInt();
+        s.nextLine();
+
+        Pessoa origem = buscarPessoaPorId(idOrigem);
+        if (origem == null) {
+            System.out.println("Pessoa não encontrada.");
+            return;
+        }
+
+        Vertice<Pessoa> verticeOrigem = grafo.getVertice(origem);
+        if (verticeOrigem == null) {
+            System.out.println("Erro interno: vértice da pessoa não encontrado.");
+            return;
+        }
+
+        AlgoritmoDijkstra<Pessoa> dijkstra = new AlgoritmoDijkstra<>();
+        dijkstra.executar(grafo, verticeOrigem);
+
+        ArrayList<Pessoa> amigosDiretos = grafo.getAdjacentes(origem);
+
+        System.out.println("\nSugestões de novos amigos para " + origem.getNome() + ":");
+
+        boolean encontrouSugestao = false;
+        ArrayList<Vertice<Pessoa>> vertices = grafo.getVerticeList();
+        for (int i = 0; i < vertices.size(); i++) {
+            Pessoa destino = vertices.get(i).getValor();
+
+            if (destino.equals(origem) || amigosDiretos.contains(destino)) {
+                continue;
+            }
+
+            double distancia = dijkstra.getDistancia(i);
+            if (distancia != Double.POSITIVE_INFINITY) {
+                System.out.printf("  -> %s (Distância social: %.2f)\n", destino.getNome(), distancia);
+                encontrouSugestao = true;
+            }
+        }
+
+        if (!encontrouSugestao) {
+            System.out.println("Nenhuma sugestão encontrada.");
         }
     }
 
