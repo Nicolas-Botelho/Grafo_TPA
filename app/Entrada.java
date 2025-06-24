@@ -22,9 +22,10 @@ public class Entrada {
         int opcao;
 
         do {
-            System.out.println("\n===================================");
-            System.out.println("         MAPEADOR DE RELAÇÕES SOCIAIS          ");
-            System.out.println("===================================");
+            System.out.println("  O\n" + " /|\\\n" + "  |\n" + " / \\");
+            System.out.println("\n====================================");
+            System.out.println("    MAPEADOR DE RELAÇÕES SOCIAIS    ");
+            System.out.println("====================================");
             System.out.println(" 0 - Sair");
             System.out.println(" 1 - Listar Pessoas Cadastradas");
             System.out.println(" 2 - Ranquear Relações de uma Pessoa");

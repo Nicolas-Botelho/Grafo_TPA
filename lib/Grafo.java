@@ -76,8 +76,6 @@ public class Grafo<T> {
     }
 
     public void caminhoEmLargura() {
-        // System.out.println("  O\n" + " /|\\\n" + "  |\n" + " / \\");
-
         ArrayList<Vertice<T>> verticesMarcados = new ArrayList<>();
         ArrayList<Vertice<T>> verticesFila = new ArrayList<>();
 
