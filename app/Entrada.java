@@ -22,7 +22,7 @@ public class Entrada {
         int opcao;
 
         do {
-            System.out.println("  O\n" + " /|\\\n" + "  |\n" + " / \\");
+            System.out.println("  O     O   (°-°)   w\n" + " /|\\   /|\\   /|\\    O\n" + "  |     |     |    /|\\\n" + " / \\   / \\   / \\   / \\");
             System.out.println("\n====================================");
             System.out.println("    MAPEADOR DE RELAÇÕES SOCIAIS    ");
             System.out.println("====================================");
